@@ -15,9 +15,10 @@
     // showdown was not found so we throw
     throw Error('Could not find showdown library');
   }
-
 }(function (showdown) {
   'use strict';
+  // Initialize a showdown converter to be used in the extension core
+  var converter = new showdown.Converter();
   // The following method will register the extension with showdown
   showdown.extension('classify', function () {
     var x = 0;
@@ -35,7 +36,7 @@
                   textSPLIT = newText.match(regex);
               if (textSPLIT != null) {
                 var textSNIPPET = textSPLIT[1],
-                    html = showdownCONVERT.makeHtml(textSNIPPET);
+                    html = converter.makeHtml(textSNIPPET);
                 newText = newText.replace(regex, '<div class="'+classNAME+'">'+html+'</div>');
               }
             }
